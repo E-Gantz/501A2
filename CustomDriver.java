@@ -1,5 +1,5 @@
 /*==========================================================================
-File: Asst2TestDriver.java
+File: CustomDriver.java
 Purpose: Driver program that loads the objects inspector and runs the
          tests. Verification of tests is done through the inspection
          of the out from the object inspector loaded at run time.
@@ -12,11 +12,11 @@ Last Updated: Oct 23, 2005
 
 import java.lang.reflect.*;
 
-public class Asst2TestDriver
+public class CustomDriver
 {
     
     //-------------------------------------------------------------------
-    public Asst2TestDriver(String ObjInspectorName, boolean recursive)
+    public CustomDriver(String ObjInspectorName, boolean recursive)
 	throws Exception
     {
 	this.recursive=recursive;
@@ -74,34 +74,26 @@ public class Asst2TestDriver
     //====================== MAIN =======================================
     public static void main(String[] args)
     {
-	boolean rec=true;
+	boolean rec=false;
 
-	if(args.length >= 0)
-	    {
-		if(args.length > 0) rec = Boolean.parseBoolean(args[0]); // Bug fixed
-
-		try
-		    {
-			System.out.println("Loading object inspector: " + "Inspector");
-			Asst2TestDriver driver = new Asst2TestDriver("Inspector",rec);
-			driver.runTest( new ClassA() );
-			driver.runTest( new ClassA(12) );
-			driver.runTest( new ClassB() );
-			driver.runTest( new ClassD(32) );
-			driver.runTest( new ClassD() );
-			driver.runTest( new ClassB[12] );
-			driver.runTest( new ClassB[12][12] );	
-			driver.runTest( "Test String" );
-		    }
-		catch(Exception e)
-		    {
-			
-			System.out.println("ERROR: " + e.getMessage());
-			System.out.println("Exiting test driver");
-		    }
-	    }
-	else
-	    System.out.println("usage: java Asst2TestDriver <object inspector name> [false]\n\nFirst argument is the name of the object inspector class to load, this class should be in the current directory. the second argument is optional, if set to false the recursive introspection will not be run for the tests.\n\n");
-
+    try
+        {
+        System.out.println("Loading object inspector: " + "Inspector");
+        CustomDriver driver = new CustomDriver("Inspector",rec);
+        driver.runTest( new ClassA() );
+        driver.runTest( new ClassA(12) );
+        driver.runTest( new ClassB() );
+        driver.runTest( new ClassD(32) );
+        driver.runTest( new ClassD() );
+        driver.runTest( new ClassB[12] );
+        driver.runTest( new ClassB[12][12] );	
+        driver.runTest( "Test String" );
+        }
+    catch(Exception e)
+        {
+        
+        System.out.println("ERROR: " + e.getMessage());
+        System.out.println("Exiting test driver");
+        }
     }
 }
