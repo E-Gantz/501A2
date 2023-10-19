@@ -116,4 +116,20 @@ public class InspectorTest {
         captcha.toString().contains("Field name: letter") && 
         captcha.toString().contains("Field name: maybe"));
 	}
+
+    @Test
+	public void correctFieldTypes() {
+		Inspector gadget = new Inspector();
+        gadget.inspect(new TestClass(), false);
+        assertTrue(captcha.toString().contains("Type: int") && 
+        captcha.toString().contains("Type: java.lang.String") && 
+        captcha.toString().contains("Type: java.lang.Boolean"));
+	}
+
+    @Test
+	public void correctFieldPrimitiveValue() {
+		Inspector gadget = new Inspector();
+        gadget.inspect(new TestClass(), false);
+        assertTrue(captcha.toString().contains("Value: 1"));
+	}
 }

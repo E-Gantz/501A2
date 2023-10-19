@@ -110,6 +110,23 @@ public class Inspector {
 
     public void inspectField(Field field, Object obj, ArrayList<Object> recurseObjects){
         System.out.println("    Field name: " + field.getName());
+
+        Class fType = field.getType();
+        System.out.println("        Type: " + fType.getName());
+
+        System.out.println("        Modifiers: " + Modifier.toString(field.getModifiers()));
+
+        if(fType.isPrimitive()){
+            try {
+                System.out.println("        Value: " + field.get(obj));
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                System.out.println("        Value: Unreachable");
+            }
+        }
+        else{
+            recurseObjects.add(field);
+            System.out.println("        Value: " + field.hashCode());
+        }
     }
 
 
