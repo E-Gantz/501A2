@@ -64,6 +64,9 @@ public class Inspector {
                 }
             }
         }
+        else {
+            System.out.println(obj + " Has already been inspected.\n");
+        }
     }
 
 
