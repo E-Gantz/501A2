@@ -76,14 +76,14 @@ public class Asst2TestDriver
     {
 	boolean rec=true;
 
-	if(args.length >= 0)
+	if(args.length >= 1)
 	    {
-		if(args.length > 0) rec = Boolean.parseBoolean(args[0]); // Bug fixed
+		if(args.length > 1) rec = Boolean.parseBoolean(args[1]); // Bug fixed
 
 		try
 		    {
-			System.out.println("Loading object inspector: " + "Inspector");
-			Asst2TestDriver driver = new Asst2TestDriver("Inspector",rec);
+			System.out.println("Loading object inspector: " + args[0]);
+			Asst2TestDriver driver = new Asst2TestDriver(args[0],rec);
 			driver.runTest( new ClassA() );
 			driver.runTest( new ClassA(12) );
 			driver.runTest( new ClassB() );

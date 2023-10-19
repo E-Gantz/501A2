@@ -132,4 +132,18 @@ public class InspectorTest {
         gadget.inspect(new TestClass(), false);
         assertTrue(captcha.toString().contains("Value: 1"));
 	}
+
+    @Test
+	public void correctFieldArrayDimension() {
+		Inspector gadget = new Inspector();
+        gadget.inspect(new TestClass(), false);
+        assertTrue(captcha.toString().contains("Type: int[][][]"));
+	}
+
+    @Test
+	public void correctFieldArrayContents() {
+		Inspector gadget = new Inspector();
+        gadget.inspect(new TestClass(), false);
+        assertTrue(captcha.toString().contains("Contents: [[[0], [0]], [[0], [0]]]"));
+	}
 }

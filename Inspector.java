@@ -39,7 +39,7 @@ public class Inspector {
         for(Field field : fields){
             try {
                 field.setAccessible(true);
-                inspectField(field, obj, recurseObjects);
+                inspectField(field, obj, recurseObjects, recursive);
             } catch (InaccessibleObjectException e) {
                 System.out.println("Field Inaccessible: " + field.getName());
             }
@@ -108,11 +108,19 @@ public class Inspector {
     }
 
 
-    public void inspectField(Field field, Object obj, ArrayList<Object> recurseObjects){
+    public void inspectField(Field field, Object obj, ArrayList<Object> recurseObjects, boolean recursive){
         System.out.println("    Field name: " + field.getName());
 
         Class fType = field.getType();
-        System.out.println("        Type: " + fType.getName());
+        System.out.println("        Type: " + fType.getTypeName());
+        if(fType.isArray()){
+            try {
+                int len = Array.getLength(field.get(obj));
+                System.out.println("        Length: " + len);
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                System.out.println("        Value: Unreachable");
+            }
+        }
 
         System.out.println("        Modifiers: " + Modifier.toString(field.getModifiers()));
 
@@ -123,9 +131,23 @@ public class Inspector {
                 System.out.println("        Value: Unreachable");
             }
         }
+        else if(fType.isArray()){
+            System.out.print("        Contents: ");
+            try {
+                if(fType.getComponentType().isArray()){
+                System.out.println(Arrays.deepToString((Object[]) field.get(obj)));
+                }
+                else{
+                    System.out.println(Arrays.toString((Object[]) field.get(obj)));
+                }
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                System.out.println("unable to access");
+            }
+        }
         else{
             recurseObjects.add(field);
-            System.out.println("        Value: " + field.hashCode());
+            System.out.println("        Identity Hash Code: " + field.hashCode());
+            if(recursive){System.out.println("            See below for introspection");}
         }
     }
 
