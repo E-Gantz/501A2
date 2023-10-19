@@ -26,4 +26,17 @@ public class InspectorTest {
         gadget.inspect(new ClassA(1), false);
         assertTrue(captcha.toString().contains("Name of declaring class: ClassA"));
 	}
+
+    @Test
+	public void correctSuperName() {
+		Inspector gadget = new Inspector();
+        try {
+            gadget.inspect(new ClassB(), false);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        assertTrue(captcha.toString().contains("Name of immediate superclass: ClassC"));
+	}
+
 }

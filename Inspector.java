@@ -25,7 +25,10 @@ public class Inspector {
     public void inspectClass(Class classObject){
         try {
             System.out.println("Name of declaring class: " + classObject.getName());
-            //Class superClass = classObject.getSuperclass();
+            Class superClass = classObject.getSuperclass();
+            if(superClass != null){
+                System.out.println("Name of immediate superclass: " + superClass.getName());
+            }
         } catch (Exception e) {
             // TODO: handle exception
         }
