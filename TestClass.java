@@ -2,7 +2,7 @@ import java.util.concurrent.BrokenBarrierException;
 
 import javax.naming.directory.InvalidAttributeIdentifierException;
 
-public class TestClass {
+public class TestClass extends ClassD implements InterfaceB{
     protected int numb;
     public String letter;
     protected Boolean maybe;
@@ -42,6 +42,14 @@ public class TestClass {
             e.printStackTrace();
         }
         return letter;
+    }
+
+    @Override
+    public void func0(int a, boolean c) throws Exception {
+        int d = a;
+        if (false){
+            throw new UnsupportedOperationException("Unimplemented method 'func0'");
+        }
     }
     
 }

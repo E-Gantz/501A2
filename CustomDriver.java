@@ -74,20 +74,20 @@ public class CustomDriver
     //====================== MAIN =======================================
     public static void main(String[] args)
     {
-	boolean rec=false;
+	boolean rec=true;
 
     try
         {
         System.out.println("Loading object inspector: " + "Inspector");
         CustomDriver driver = new CustomDriver("Inspector",rec);
-        driver.runTest( new ClassA() );
+        /*driver.runTest( new ClassA() );
         driver.runTest( new ClassA(12) );
         driver.runTest( new ClassB() );
         driver.runTest( new ClassD(32) );
         driver.runTest( new ClassD() );
         driver.runTest( new ClassB[12] );
         driver.runTest( new ClassB[12][12] );	
-        //driver.runTest( "Test String" );
+        //driver.runTest( "Test String" );*/
         driver.runTest(new TestClass());
         }
     catch(Exception e)

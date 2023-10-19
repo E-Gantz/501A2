@@ -18,6 +18,7 @@ public class Inspector {
             else {
                 System.out.println("Inspecting " + obj + " non-recursively");
             }
+            System.out.println("Reference Value: " + classObject.getName() + " " + obj.hashCode());
 
             inspectClass(classObject, superObjects);
 
@@ -56,7 +57,11 @@ public class Inspector {
             }
 
             if (recursive){
-                inspectRecursive(obj, classObject, recurseObjects, recursive);
+                System.out.println("");
+                System.out.println("Recursively Inspecting Objects in " + obj + "\n");
+                for(Object recurseObj : recurseObjects){
+                    inspect(recurseObj, recursive);
+                }
             }
         }
     }
