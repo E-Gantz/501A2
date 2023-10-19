@@ -27,6 +27,12 @@ public class Inspector {
             }
         }
 
+        System.out.println("Constructors this class declares:");
+        Constructor[] makers = classObject.getDeclaredConstructors();
+        for(Constructor maker : makers){
+            inspectConstructor(maker);
+        }
+
         inspectFields(obj, classObject, fields);
 
         if (recursive){
@@ -74,6 +80,18 @@ public class Inspector {
         System.out.println("    Return Type: " + methodObject.getReturnType().getName());
 
         System.out.println("    Modifiers: " + Modifier.toString(methodObject.getModifiers()));
+    }
+
+    public void inspectConstructor(Constructor maker){
+        System.out.println("Constructor name: " + maker.getName());
+        System.out.print("    Parameter Types: ");
+        Class[] params = maker.getParameterTypes();
+        for (Class param : params){
+            System.out.print(param.getName() + ", ");
+        }
+        System.out.println("");
+        
+        System.out.println("    Modifiers: " + Modifier.toString(maker.getModifiers()));
     }
 
     public void inspectFields(Object obj,Class classObject, ArrayList fields){

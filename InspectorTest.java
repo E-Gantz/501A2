@@ -21,7 +21,7 @@ public class InspectorTest {
     }
 
     @Test
-	public void correctName() {
+	public void correctClassName() {
 		Inspector gadget = new Inspector();
         gadget.inspect(new ClassA(1), false);
         assertTrue(captcha.toString().contains("Name of declaring class: ClassA"));
@@ -58,30 +58,53 @@ public class InspectorTest {
 	}
 
     @Test
-	public void correctExceptions() {
+	public void correctMethodExceptions() {
 		Inspector gadget = new Inspector();
-        gadget.inspect(new ClassA(1), false);
-        assertTrue(captcha.toString().contains("Exceptions Thrown: java.lang.Exception"));
+        gadget.inspect(new TestClass(), false);
+        assertTrue(captcha.toString().contains("Exceptions Thrown: java.util.concurrent.BrokenBarrierException, javax.naming.directory.InvalidAttributeIdentifierException"));
 	}
 
     @Test
-	public void correctParameters() {
+	public void correctMethodParameters() {
 		Inspector gadget = new Inspector();
-        gadget.inspect(new ClassA(1), false);
-        assertTrue(captcha.toString().contains("Parameter Types: int"));
+        gadget.inspect(new TestClass(), false);
+        assertTrue(captcha.toString().contains("Parameter Types: int, double, boolean"));
 	}
 
     @Test
-	public void correctReturn() throws Exception {
+	public void correctMethodReturn() throws Exception {
 		Inspector gadget = new Inspector();
-        gadget.inspect(new ClassB(), false);
+        gadget.inspect(new TestClass(), false);
         assertTrue(captcha.toString().contains("Return Type: java.lang.String"));
 	}
 
     @Test
-	public void correctModifiers() {
+	public void correctMethodModifiers() {
 		Inspector gadget = new Inspector();
-        gadget.inspect(new ClassA(1), false);
-        assertTrue(captcha.toString().contains("Modifiers: public") && captcha.toString().contains("Modifiers: private"));
+        gadget.inspect(new TestClass(), false);
+        assertTrue(captcha.toString().contains("Modifiers: public") && 
+        captcha.toString().contains("Modifiers: private") && 
+        captcha.toString().contains("Modifiers: protected"));
+	}
+
+    @Test
+	public void correctConstructorName() {
+		Inspector gadget = new Inspector();
+        gadget.inspect(new TestClass(), false);
+        assertTrue(captcha.toString().contains("Constructor name: TestClass"));
+	}
+
+    @Test
+	public void correctConstructorParameters() {
+		Inspector gadget = new Inspector();
+        gadget.inspect(new TestClass(), false);
+        assertTrue(captcha.toString().contains("Parameter Types: int, java.lang.String, java.lang.Boolean"));
+	}
+
+    @Test
+	public void correctConstructorModifiers() {
+		Inspector gadget = new Inspector();
+        gadget.inspect(new TestClass(), false);
+        assertTrue(captcha.toString().contains("Modifiers: public"));
 	}
 }
