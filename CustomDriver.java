@@ -86,9 +86,9 @@ public class CustomDriver
         driver.runTest( new ClassD(32) );
         driver.runTest( new ClassD() );
         driver.runTest( new ClassB[12] );
-        driver.runTest( new ClassB[12][12] );
-        driver.runTest(new TestClass());	
+        driver.runTest( new ClassB[12][12] );	
         //driver.runTest( "Test String" );
+        driver.runTest(new TestClass());
         }
     catch(Exception e)
         {
