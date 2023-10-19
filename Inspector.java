@@ -15,6 +15,18 @@ public class Inspector {
         }
 
         inspectClass(classObject);
+
+        System.out.println("Methods this class declares:");
+        Method[] methods = classObject.getDeclaredMethods();
+        for(Method m : methods){
+            try {
+                m.setAccessible(true);
+                inspectMethod(m);
+            } catch (InaccessibleObjectException e) {
+                System.out.println("Method Inaccessible: " + m.getName());
+            }
+        }
+
         inspectFields(obj, classObject, fields);
 
         if (recursive){
@@ -33,18 +45,23 @@ public class Inspector {
 
             Class[] interfaces = classObject.getInterfaces();
             System.out.print("Name of the interfaces the class implements: ");
-            for (int i=0; i< interfaces.length; i++){
-                if(i!=interfaces.length-1){
-                    System.out.print(interfaces[i].getName() + ", ");
-                }
-                else {
-                    System.out.print(interfaces[i].getName());
-                }
+            for (Class i : interfaces){
+                System.out.print(i.getName() + ", ");
             }
             System.out.println("");
         } catch (Exception e) {
             // TODO: handle exception
         }
+    }
+
+    public void inspectMethod(Method methodObject){
+        System.out.println("Method name: " + methodObject.getName());
+        System.out.print("    Exceptions Thrown: ");
+        Class[] exceptions = methodObject.getExceptionTypes();
+        for (Class e : exceptions){
+            System.out.print(e.getName() + ", ");
+        }
+        System.out.println("");
     }
 
     public void inspectFields(Object obj,Class classObject, ArrayList fields){

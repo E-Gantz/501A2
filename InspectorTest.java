@@ -46,4 +46,22 @@ public class InspectorTest {
         assertTrue(captcha.toString().contains("Name of the interfaces the class implements: java.io.Serializable, java.lang.Runnable"));
 	}
 
+    @Test
+	public void correctMethodNames() {
+		Inspector gadget = new Inspector();
+        gadget.inspect(new ClassA(1), false);
+        assertTrue(captcha.toString().contains("Method name: run") && 
+        captcha.toString().contains("Method name: toString") && 
+        captcha.toString().contains("Method name: printSomething") && 
+        captcha.toString().contains("Method name: setVal") && 
+        captcha.toString().contains("Method name: getVal"));
+	}
+
+    @Test
+	public void correctExceptionName() {
+		Inspector gadget = new Inspector();
+        gadget.inspect(new ClassA(1), false);
+        assertTrue(captcha.toString().contains("Exceptions Thrown: java.lang.Exception"));
+	}
+
 }
