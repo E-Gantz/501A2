@@ -39,4 +39,11 @@ public class InspectorTest {
         assertTrue(captcha.toString().contains("Name of immediate superclass: ClassC"));
 	}
 
+    @Test
+	public void correctInterfaces() {
+		Inspector gadget = new Inspector();
+        gadget.inspect(new ClassA(1), false);
+        assertTrue(captcha.toString().contains("Name of the interfaces the class implements: java.io.Serializable, java.lang.Runnable"));
+	}
+
 }

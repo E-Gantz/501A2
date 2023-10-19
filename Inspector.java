@@ -25,10 +25,23 @@ public class Inspector {
     public void inspectClass(Class classObject){
         try {
             System.out.println("Name of declaring class: " + classObject.getName());
+
             Class superClass = classObject.getSuperclass();
             if(superClass != null){
                 System.out.println("Name of immediate superclass: " + superClass.getName());
             }
+
+            Class[] interfaces = classObject.getInterfaces();
+            System.out.print("Name of the interfaces the class implements: ");
+            for (int i=0; i< interfaces.length; i++){
+                if(i!=interfaces.length-1){
+                    System.out.print(interfaces[i].getName() + ", ");
+                }
+                else {
+                    System.out.print(interfaces[i].getName());
+                }
+            }
+            System.out.println("");
         } catch (Exception e) {
             // TODO: handle exception
         }
