@@ -56,12 +56,22 @@ public class Inspector {
 
     public void inspectMethod(Method methodObject){
         System.out.println("Method name: " + methodObject.getName());
+
         System.out.print("    Exceptions Thrown: ");
         Class[] exceptions = methodObject.getExceptionTypes();
         for (Class e : exceptions){
             System.out.print(e.getName() + ", ");
         }
         System.out.println("");
+
+        System.out.print("    Parameter Types: ");
+        Class[] params = methodObject.getParameterTypes();
+        for (Class param : params){
+            System.out.print(param.getName() + ", ");
+        }
+        System.out.println("");
+
+        System.out.println("    Return Type: " + methodObject.getReturnType().getName());
     }
 
     public void inspectFields(Object obj,Class classObject, ArrayList fields){

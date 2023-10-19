@@ -58,10 +58,24 @@ public class InspectorTest {
 	}
 
     @Test
-	public void correctExceptionName() {
+	public void correctExceptions() {
 		Inspector gadget = new Inspector();
         gadget.inspect(new ClassA(1), false);
         assertTrue(captcha.toString().contains("Exceptions Thrown: java.lang.Exception"));
+	}
+
+    @Test
+	public void correctParameters() {
+		Inspector gadget = new Inspector();
+        gadget.inspect(new ClassA(1), false);
+        assertTrue(captcha.toString().contains("Parameter Types: int"));
+	}
+
+    @Test
+	public void correctReturn() throws Exception {
+		Inspector gadget = new Inspector();
+        gadget.inspect(new ClassB(), false);
+        assertTrue(captcha.toString().contains("Return Type: java.lang.String"));
 	}
 
 }
