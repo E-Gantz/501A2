@@ -72,6 +72,8 @@ public class Inspector {
         System.out.println("");
 
         System.out.println("    Return Type: " + methodObject.getReturnType().getName());
+
+        System.out.println("    Modifiers: " + Modifier.toString(methodObject.getModifiers()));
     }
 
     public void inspectFields(Object obj,Class classObject, ArrayList fields){

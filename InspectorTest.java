@@ -78,4 +78,10 @@ public class InspectorTest {
         assertTrue(captcha.toString().contains("Return Type: java.lang.String"));
 	}
 
+    @Test
+	public void correctModifiers() {
+		Inspector gadget = new Inspector();
+        gadget.inspect(new ClassA(1), false);
+        assertTrue(captcha.toString().contains("Modifiers: public") && captcha.toString().contains("Modifiers: private"));
+	}
 }
