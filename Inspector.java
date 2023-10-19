@@ -3,8 +3,9 @@ import java.util.*;
 import java.lang.reflect.*;
 
 public class Inspector {
+
     public void inspect(Object obj, boolean recursive){
-        ArrayList<Object>  fields = new ArrayList<Object>();
+        ArrayList<Object> recurseObjects = new ArrayList<Object>();
         Class classObject = obj.getClass();
 
         if (recursive){
@@ -33,12 +34,22 @@ public class Inspector {
             inspectConstructor(maker);
         }
 
-        inspectFields(obj, classObject, fields);
+        System.out.println("Fields this class declares:");
+        Field[] fields = classObject.getDeclaredFields();
+        for(Field field : fields){
+            try {
+                field.setAccessible(true);
+                inspectField(field, obj, recurseObjects);
+            } catch (InaccessibleObjectException e) {
+                System.out.println("Field Inaccessible: " + field.getName());
+            }
+        }
 
         if (recursive){
-            inspectRecursive(obj, classObject, fields, recursive);
+            inspectRecursive(obj, classObject, recurseObjects, recursive);
         }
     }
+
 
     public void inspectClass(Class classObject){
         try {
@@ -60,46 +71,51 @@ public class Inspector {
         }
     }
 
-    public void inspectMethod(Method methodObject){
-        System.out.println("Method name: " + methodObject.getName());
 
-        System.out.print("    Exceptions Thrown: ");
+    public void inspectMethod(Method methodObject){
+        System.out.println("    Method name: " + methodObject.getName());
+
+        System.out.print("        Exceptions Thrown: ");
         Class[] exceptions = methodObject.getExceptionTypes();
         for (Class e : exceptions){
             System.out.print(e.getName() + ", ");
         }
         System.out.println("");
 
-        System.out.print("    Parameter Types: ");
+        System.out.print("        Parameter Types: ");
         Class[] params = methodObject.getParameterTypes();
         for (Class param : params){
             System.out.print(param.getName() + ", ");
         }
         System.out.println("");
 
-        System.out.println("    Return Type: " + methodObject.getReturnType().getName());
+        System.out.println("        Return Type: " + methodObject.getReturnType().getName());
 
-        System.out.println("    Modifiers: " + Modifier.toString(methodObject.getModifiers()));
+        System.out.println("        Modifiers: " + Modifier.toString(methodObject.getModifiers()));
     }
 
+
     public void inspectConstructor(Constructor maker){
-        System.out.println("Constructor name: " + maker.getName());
-        System.out.print("    Parameter Types: ");
+        System.out.println("    Constructor name: " + maker.getName());
+        System.out.print("        Parameter Types: ");
         Class[] params = maker.getParameterTypes();
         for (Class param : params){
             System.out.print(param.getName() + ", ");
         }
         System.out.println("");
-        
-        System.out.println("    Modifiers: " + Modifier.toString(maker.getModifiers()));
+
+        System.out.println("        Modifiers: " + Modifier.toString(maker.getModifiers()));
     }
 
-    public void inspectFields(Object obj,Class classObject, ArrayList fields){
-        //uh
+
+    public void inspectField(Field field, Object obj, ArrayList<Object> recurseObjects){
+        System.out.println("    Field name: " + field.getName());
     }
+
 
     public void inspectRecursive(Object obj, Class classObject, ArrayList fields, boolean recursive){
         //uh
     }
+
     
 }

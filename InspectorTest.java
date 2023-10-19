@@ -107,4 +107,13 @@ public class InspectorTest {
         gadget.inspect(new TestClass(), false);
         assertTrue(captcha.toString().contains("Modifiers: public"));
 	}
+
+    @Test
+	public void correctFieldNames() {
+		Inspector gadget = new Inspector();
+        gadget.inspect(new TestClass(), false);
+        assertTrue(captcha.toString().contains("Field name: numb") && 
+        captcha.toString().contains("Field name: letter") && 
+        captcha.toString().contains("Field name: maybe"));
+	}
 }
