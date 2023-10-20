@@ -147,40 +147,44 @@ public class Inspector {
         Class fType = field.getType();
         System.out.println("        Type: " + fType.getTypeName());
         if(fType.isArray()){
-            try {
-                int len = Array.getLength(field.get(obj));
-                System.out.println("        Length: " + len);
-            } catch (IllegalArgumentException | IllegalAccessException e) {
-                System.out.println("        Value: Unreachable");
-            }
-        }
-
-        System.out.println("        Modifiers: " + Modifier.toString(field.getModifiers()));
-
-        if(fType.isPrimitive()){
-            try {
-                System.out.println("        Value: " + field.get(obj));
-            } catch (IllegalArgumentException | IllegalAccessException e) {
-                System.out.println("        Value: Unreachable");
-            }
-        }
-        else if(fType.isArray()){
-            System.out.print("        Contents: ");
-            try {
-                if(fType.getComponentType().isArray()){
-                System.out.println(Arrays.deepToString((Object[]) field.get(obj)));
-                }
-                else{
-                    System.out.println(Arrays.toString((Object[]) field.get(obj)));
-                }
-            } catch (IllegalArgumentException | IllegalAccessException e) {
-                System.out.println("unable to access");
-            }
+            inspectFieldArray(field, obj, fType);
         }
         else{
-            recurseObjects.add(field);
-            System.out.println("        Identity Hash Code: " + field.hashCode());
-            if(recursive){System.out.println("            See below for introspection");}
+            System.out.println("        Modifiers: " + Modifier.toString(field.getModifiers()));
+
+            if(fType.isPrimitive()){
+                try {
+                    System.out.println("        Value: " + field.get(obj));
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    System.out.println("        Value: Unreachable");
+                }
+            }
+            else{
+                recurseObjects.add(field);
+                System.out.println("        Identity Hash Code: " + field.hashCode());
+                if(recursive){System.out.println("            See below for introspection");}
+            }
+        }
+    }
+
+    public void inspectFieldArray(Field field, Object obj, Class fType){
+        try {
+            int len = Array.getLength(field.get(obj));
+            System.out.println("        Length: " + len);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            System.out.println("        Value: Unreachable");
+        }
+        System.out.println("        Modifiers: " + Modifier.toString(field.getModifiers()));
+        System.out.print("        Contents: ");
+        try {
+            if(fType.getComponentType().isArray()){
+            System.out.println(Arrays.deepToString((Object[]) field.get(obj)));
+            }
+            else{
+                System.out.println(Arrays.toString((Object[]) field.get(obj)));
+            }
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            System.out.println("unable to access");
         }
     }
 }

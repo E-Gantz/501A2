@@ -1,4 +1,7 @@
 I didn't do much, if any, noteworthy refactoring until my assignment was feature-complete, so consider commit #14 (https://github.com/E-Gantz/501A2/tree/6796c7a0a0b8f9787cdc92c01a13a74b1401df3c) the initial commit for the refactoring phase.
-The main bad smell was long methods that were doing too much, so the first steps in refactoring were to break those up into smaller methods.
+The main bad smell was long methods that were doing too much, 
+    so the first steps in refactoring were to break those up into smaller methods.
 I felt that my inspect method was doing too much work, getting the various method, field, constructor, etc. arrays and looping through them,
-    so I extracted this functionality out into helper methods.
+    so I extracted this functionality out into helper methods. (https://github.com/E-Gantz/501A2/tree/c86e48a675f797ff5e422bd4c69627d3d1a3253a)
+Next, it looked like inspectField was a bit long and was essentially operating in two modes: handling an array and not handling an array,
+    so I extracted the 'handling an array' functionality into its own method.
