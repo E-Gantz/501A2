@@ -6,7 +6,7 @@ public class Inspector {
     ArrayList<Integer> seenObjects = new ArrayList<Integer>();
 
     public void inspect(Object obj, boolean recursive){
-        if(!seenObjects.contains(obj.hashCode())){
+        if(!seenObjects.contains(obj.hashCode())){  //According to TA we want to avoid inspecting the same object twice.
             seenObjects.add(obj.hashCode());
             ArrayList<Object> recurseObjects = new ArrayList<Object>();
             ArrayList<Object> superObjects = new ArrayList<Object>();
@@ -22,36 +22,14 @@ public class Inspector {
 
             inspectClass(classObject, superObjects);
 
-            System.out.println("Methods this class declares:");
-            Method[] methods = classObject.getDeclaredMethods();
-            for(Method m : methods){
-                try {
-                    m.setAccessible(true);
-                    inspectMethod(m);
-                } catch (InaccessibleObjectException e) {
-                    System.out.println("Method Inaccessible: " + m.getName());
-                }
-            }
+            methodInspection(classObject);
 
-            System.out.println("Constructors this class declares:");
-            Constructor[] makers = classObject.getDeclaredConstructors();
-            for(Constructor maker : makers){
-                inspectConstructor(maker);
-            }
+            constructorInspection(classObject);
 
-            System.out.println("Fields this class declares:");
-            Field[] fields = classObject.getDeclaredFields();
-            for(Field field : fields){
-                try {
-                    field.setAccessible(true);
-                    inspectField(field, obj, recurseObjects, recursive);
-                } catch (InaccessibleObjectException e) {
-                    System.out.println("Field Inaccessible: " + field.getName());
-                }
-            }
+            fieldInspection(classObject, obj, recurseObjects, recursive);
+
             System.out.println("");
             System.out.println("Traversing Inheritance Hierarchy for " + obj + "\n");
-
             for(Object superObj : superObjects){
                 inspect(superObj, recursive);
             }
@@ -88,10 +66,23 @@ public class Inspector {
             }
             System.out.println("");
         } catch (Exception e) {
-            // TODO: handle exception
+            //
         }
     }
 
+
+    public void methodInspection(Class classObject){
+        System.out.println("Methods this class declares:");
+        Method[] methods = classObject.getDeclaredMethods();
+        for(Method m : methods){
+            try {
+                m.setAccessible(true);
+                inspectMethod(m);
+            } catch (InaccessibleObjectException e) {
+                System.out.println("Method Inaccessible: " + m.getName());
+            }
+        }
+    }
 
     public void inspectMethod(Method methodObject){
         System.out.println("    Method name: " + methodObject.getName());
@@ -116,6 +107,14 @@ public class Inspector {
     }
 
 
+    public void constructorInspection(Class classObject){
+        System.out.println("Constructors this class declares:");
+        Constructor[] makers = classObject.getDeclaredConstructors();
+        for(Constructor maker : makers){
+            inspectConstructor(maker);
+        }
+    }
+
     public void inspectConstructor(Constructor maker){
         System.out.println("    Constructor name: " + maker.getName());
         System.out.print("        Parameter Types: ");
@@ -128,6 +127,19 @@ public class Inspector {
         System.out.println("        Modifiers: " + Modifier.toString(maker.getModifiers()));
     }
 
+
+    public void fieldInspection(Class classObject, Object obj, ArrayList<Object> recurseObjects, boolean recursive){
+        System.out.println("Fields this class declares:");
+        Field[] fields = classObject.getDeclaredFields();
+        for(Field field : fields){
+            try {
+                field.setAccessible(true);
+                inspectField(field, obj, recurseObjects, recursive);
+            } catch (InaccessibleObjectException e) {
+                System.out.println("Field Inaccessible: " + field.getName());
+            }
+        }
+    }
 
     public void inspectField(Field field, Object obj, ArrayList<Object> recurseObjects, boolean recursive){
         System.out.println("    Field name: " + field.getName());
@@ -171,11 +183,4 @@ public class Inspector {
             if(recursive){System.out.println("            See below for introspection");}
         }
     }
-
-
-    public void inspectRecursive(Object obj, Class classObject, ArrayList fields, boolean recursive){
-        //uh
-    }
-
-    
 }

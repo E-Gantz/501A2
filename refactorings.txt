@@ -1,0 +1,4 @@
+I didn't do much, if any, noteworthy refactoring until my assignment was feature-complete, so consider commit #14 (https://github.com/E-Gantz/501A2/tree/6796c7a0a0b8f9787cdc92c01a13a74b1401df3c) the initial commit for the refactoring phase.
+The main bad smell was long methods that were doing too much, so the first steps in refactoring were to break those up into smaller methods.
+I felt that my inspect method was doing too much work, getting the various method, field, constructor, etc. arrays and looping through them,
+    so I extracted this functionality out into helper methods.
